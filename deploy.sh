@@ -64,6 +64,12 @@ cp -a "$HERE/modules/imported/." "$SITE/modules/imported/"
 echo "[*] 安装 catalog.json"
 cp "$HERE/catalog.json" "$SITE/catalog.json"
 
+# 若包内自带 app.js（放宽了 ruleCount 过滤），一并覆盖
+if [ -f "$HERE/app.js" ]; then
+  echo "[*] 覆盖 app.js（包内自带）"
+  cp "$HERE/app.js" "$SITE/app.js"
+fi
+
 # 刷新版本号，避免浏览器 / Cloudflare 命中旧缓存
 TS=$(date +%Y%m%d%H%M)
 if [ -f "$SITE/app.js" ]; then
