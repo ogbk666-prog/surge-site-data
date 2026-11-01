@@ -139,6 +139,7 @@ function updateCatalog() {
     const catOk = activeCategory === 'all' || card.dataset.category === activeCategory;
     const searchOk = !query || (card.dataset.search || '').toLocaleLowerCase().includes(query);
     const matches = kindOk && catOk && searchOk;
+    card.dataset.match = matches ? '1' : '0';
     card.hidden = !matches || visible >= displayLimit;
     if (matches) visible += 1;
   });
