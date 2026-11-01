@@ -36,6 +36,15 @@ document.querySelectorAll('.import-link').forEach(link => {
   link.href = importHref(link.dataset.kind || 'surge', url);
 });
 
+// 静态卡片的图标也做兜底，缺图统一退到 favicon
+document.querySelectorAll('.catalog-card .app-icon').forEach(img => {
+  img.addEventListener('error', () => {
+    if (img.dataset.fallback) return;
+    img.dataset.fallback = '1';
+    img.src = 'favicon.svg';
+  });
+});
+
 // 首页 6 张精选卡片不属于扩展目录，单独归到 featured
 document.querySelectorAll('.catalog-card:not(.imported-card)').forEach(card => {
   card.dataset.kind = card.dataset.kind || 'featured';
