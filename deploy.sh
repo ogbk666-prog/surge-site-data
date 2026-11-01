@@ -73,6 +73,10 @@ if [ -f "$HERE/index.html" ]; then
   echo "[*] 覆盖 index.html（包内自带）"
   cp "$HERE/index.html" "$SITE/index.html"
 fi
+if [ -f "$HERE/style.css" ]; then
+  echo "[*] 覆盖 style.css（包内自带）"
+  cp "$HERE/style.css" "$SITE/style.css"
+fi
 
 # 刷新版本号，避免浏览器 / Cloudflare 命中旧缓存
 TS=$(date +%Y%m%d%H%M%S)

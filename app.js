@@ -207,8 +207,44 @@ fetch('catalog.json?v=DEV')
     const totalEl = document.querySelector('#totalModules');
     if (totalEl) totalEl.textContent = String(modules.length);
     fillCounts(modules);
+    const cacheEl = document.querySelector('#cacheStatus');
+    if (cacheEl) cacheEl.innerHTML = `<i aria-hidden="true"></i>已加载 ${modules.length} 个模块`;
     updateCatalog();
   })
   .catch(() => announce('扩展目录暂时无法加载'));
 
 updateCatalog();
+
+/* ---------------- 主题切换（light / dark / auto） ---------------- */
+const THEME_KEY = 'xinyue-theme';
+const themeButtons = [...document.querySelectorAll('[data-theme]')];
+
+function applyTheme(mode) {
+  let dark = mode === 'dark';
+  if (mode === 'auto') {
+    try { dark = !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches); } catch { dark = false; }
+  }
+  if (document.documentElement) {
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  }
+  themeButtons.forEach(b => b.classList.toggle('active', b.dataset.theme === mode));
+}
+
+let savedTheme = 'auto';
+try { savedTheme = localStorage.getItem(THEME_KEY) || 'auto'; } catch { /* 隐私模式忽略 */ }
+applyTheme(savedTheme);
+
+themeButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    savedTheme = btn.dataset.theme;
+    try { localStorage.setItem(THEME_KEY, savedTheme); } catch { /* ignore */ }
+    applyTheme(savedTheme);
+  });
+});
+
+try {
+  const mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+  if (mq && mq.addEventListener) {
+    mq.addEventListener('change', () => { if (savedTheme === 'auto') applyTheme('auto'); });
+  }
+} catch { /* ignore */ }
