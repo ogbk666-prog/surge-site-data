@@ -176,3 +176,24 @@ html[data-theme="dark"] .catalog-empty{background:#131f1a;border-color:#2a4034;c
   .hero-stats{gap:6px}
   .stat-pill{padding:7px 12px;font-size:11px}
 }
+
+/* ================= 免责声明（顶部条 / 页脚） ================= */
+.topbar p strong{color:#1f6fb2;margin-right:7px;font-weight:800}
+
+.footer{background:#fff;border-top:1px solid #e7eee4;padding:44px 0 54px;text-align:left}
+.footer-content{display:block}
+.disclaimer-box{max-width:880px;margin:0 auto;padding:0 4px}
+.disclaimer-title{font-size:11px;font-weight:800;letter-spacing:.16em;color:#7a9d57;margin:0 0 16px;text-transform:uppercase}
+.disclaimer-text{font-size:12px;line-height:1.95;color:#7d8f7d;margin:0 0 9px;letter-spacing:.01em}
+.disclaimer-text:last-child{margin-bottom:0}
+
+html[data-theme="dark"] .topbar p strong{color:#7fb3dd}
+html[data-theme="dark"] .footer{background:#0e1512;border-top-color:#1d2b24}
+html[data-theme="dark"] .disclaimer-title{color:#9fd08a}
+html[data-theme="dark"] .disclaimer-text{color:#93ada2}
+
+@media(max-width:700px){
+  .topbar p{text-align:left;line-height:1.7;font-size:11px}
+  .footer{padding:32px 0 40px}
+  .disclaimer-text{font-size:11px;line-height:1.85}
+}
