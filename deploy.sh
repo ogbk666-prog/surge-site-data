@@ -75,7 +75,7 @@ if [ -f "$HERE/index.html" ]; then
 fi
 
 # 刷新版本号，避免浏览器 / Cloudflare 命中旧缓存
-TS=$(date +%Y%m%d%H%M)
+TS=$(date +%Y%m%d%H%M%S)
 if [ -f "$SITE/app.js" ]; then
   sed -i -E "s#catalog\.json\?v=[A-Za-z0-9._%-]+#catalog.json?v=$TS#g" "$SITE/app.js" || true
 fi

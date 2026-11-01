@@ -142,7 +142,7 @@ function updateCatalog() {
     card.hidden = !matches || visible >= displayLimit;
     if (matches) visible += 1;
   });
-  resultsCount.textContent = `共 ${visible} 个模块`;
+  resultsCount.textContent = `共 ${visible} 个结果`;
   if (emptyState) emptyState.hidden = visible !== 0;
   if (loadMore) loadMore.hidden = visible <= displayLimit;
 }
@@ -200,9 +200,11 @@ fetch('catalog.json?v=DEV')
     const modules = Array.isArray(data.modules) ? data.modules.filter(module =>
       module.url?.startsWith('https://surge.loder.my/modules/imported/')) : [];
     catalogGrid.append(...modules.map(importedCard));
-    document.querySelector('#importedCount').textContent = modules.length;
-    // 只统计扩展目录条目，不再硬编码 +6（那 6 个是 index.html 里的精选卡片）
-    document.querySelector('#totalModules').textContent = String(modules.length);
+    // 所有 DOM 写回都做判空：模板里删掉的元素不能让整条链路炸掉
+    const importedEl = document.querySelector('#importedCount');
+    if (importedEl) importedEl.textContent = modules.length;
+    const totalEl = document.querySelector('#totalModules');
+    if (totalEl) totalEl.textContent = String(modules.length);
     fillCounts(modules);
     updateCatalog();
   })
