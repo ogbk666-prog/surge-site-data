@@ -56,6 +56,7 @@ let activeFilter = 'all';
 let displayLimit = 24;
 
 function importedCard(module) {
+  const kind = module.kind === 'loon' ? 'loon' : 'surge';
   const card = document.createElement('article');
   card.className = 'catalog-card imported-card';
   card.dataset.category = 'imported';
@@ -69,7 +70,6 @@ function importedCard(module) {
   icon.alt = '';
   icon.width = icon.height = 53;
   icon.loading = 'lazy';
-  const kind = module.kind === 'loon' ? 'loon' : 'surge';
   const type = document.createElement('span');
   type.className = 'catalog-type';
   type.textContent = kind === 'loon' ? 'Loon 插件' : 'Surge 模块';
@@ -83,7 +83,7 @@ function importedCard(module) {
     : '脚本 / 配置类模块，导入后按需启用。';
   const tags = document.createElement('div');
   tags.className = 'catalog-tags';
-  for (const label of ['Surge', '广告拦截']) {
+  for (const label of [kind === 'loon' ? 'Loon' : 'Surge', '广告拦截']) {
     const tag = document.createElement('span');
     tag.textContent = label;
     tags.append(tag);
@@ -142,7 +142,8 @@ fetch('catalog.json?v=DEV')
       module.url?.startsWith('https://surge.loder.my/modules/imported/')) : [];
     catalogGrid.append(...modules.map(importedCard));
     document.querySelector('#importedCount').textContent = modules.length;
-    document.querySelector('#totalModules').textContent = String(modules.length + 6).padStart(2, '0');
+// 只统计扩展目录条目，不再硬编码 +6（那 6 个是 index.html 里的精选卡片）
+    document.querySelector('#totalModules').textContent = String(modules.length);
     updateCatalog();
   })
   .catch(() => announce('扩展目录暂时无法加载'));

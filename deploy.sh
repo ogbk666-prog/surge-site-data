@@ -69,6 +69,10 @@ if [ -f "$HERE/app.js" ]; then
   echo "[*] 覆盖 app.js（包内自带）"
   cp "$HERE/app.js" "$SITE/app.js"
 fi
+if [ -f "$HERE/index.html" ]; then
+  echo "[*] 覆盖 index.html（包内自带）"
+  cp "$HERE/index.html" "$SITE/index.html"
+fi
 
 # 刷新版本号，避免浏览器 / Cloudflare 命中旧缓存
 TS=$(date +%Y%m%d%H%M)

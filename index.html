@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101b1c">
+  <meta name="description" content="Surge 去广告模块目录。查看模块说明，在 iPhone 上一键导入 Surge。">
+  <title>清爽一点 · Surge 去广告模块</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css?v=202611011439">
+  <script src="app.js?v=202611011439" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="#top" aria-label="清爽一点，返回顶部">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span>清爽一点<span class="brand-suffix">/ SURGE MODULES</span></span>
+      </a>
+      <nav aria-label="主导航">
+        <a href="#modules">模块</a>
+        <a href="#guide">安装说明</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero shell" id="top" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span> SURGE MODULES</p>
+        <h1 id="hero-title">少一点打扰，<br><em>多一点专注。</em></h1>
+        <p class="hero-description">禁止在中国境内传播，本模块仅供个人测试使用，禁止用于商业用途。</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#modules">浏览模块 <span aria-hidden="true">↗</span></a>
+          <a class="button button-quiet" href="#guide">如何使用 <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="hero-facts" aria-label="目录概览">
+          <div><strong id="totalModules">--</strong><span>个导入选项</span></div>
+          <div><strong>Surge</strong><span>模块格式</span></div>
+          <div><strong>按需</strong><span>选择模块</span></div>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="art-star art-star-one">✳</div><div class="art-star art-star-two">✳</div>
+        <div class="device">
+          <div class="device-top"><span>9:41</span><span class="device-island"></span><span>● ▰</span></div>
+          <div class="device-content">
+            <p class="device-kicker">SURGE / MODULES</p>
+            <div class="device-symbol"><span></span><span></span><span></span></div>
+            <h2>保持清爽。</h2>
+            <p>按需选择你想启用的模块</p>
+            <div class="mock-card"><img class="mock-icon" src="assets/renmin-ribao.jpg" alt="" width="37" height="37"><span><b>人民日报</b><small>开屏广告拦截</small></span><i>✓</i></div>
+            <div class="mock-card"><img class="mock-icon" src="assets/xinyue-club.jpg" alt="" width="37" height="37"><span><b>心悦俱乐部</b><small>广告过滤</small></span><i>✓</i></div>
+            <div class="mock-card"><img class="mock-icon" src="assets/hupu.jpg" alt="" width="37" height="37"><span><b>虎扑</b><small>广告接口过滤</small></span><i>✓</i></div>
+            <div class="device-bottom"><span></span><span></span><span></span></div>
+          </div>
+        </div>
+        <div class="float-tag float-tag-top">SELECT <span>01 / 06</span></div>
+        <div class="float-tag float-tag-bottom"><span class="check-dot">✓</span> READY TO IMPORT</div>
+      </div>
+    </section>
+
+    <div class="catalog-announcement shell" role="note"><span aria-hidden="true">✦</span><p>选择需要的模块，点击卡片即可在 Surge 中导入</p><a href="#guide">查看安装说明 <span aria-hidden="true">↗</span></a></div>
+
+    <section class="module-section" id="modules" aria-labelledby="modules-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="section-number">01 / MODULES</p><h2 id="modules-title">选择你的模块。</h2></div>
+        </div>
+
+        <div class="catalog-tools">
+          <label class="catalog-search" for="moduleSearch"><span aria-hidden="true">⌕</span><input id="moduleSearch" type="search" placeholder="搜索模块或应用" autocomplete="off" aria-label="搜索模块或应用"></label>
+          <div class="catalog-filters" role="group" aria-label="按模块用途筛选">
+            <button type="button" class="active" data-filter="all" aria-pressed="true">全部 <span>6</span></button>
+            <button type="button" data-filter="splash" aria-pressed="false">开屏过滤 <span>1</span></button>
+            <button type="button" data-filter="multi" aria-pressed="false">多页面过滤 <span>1</span></button>
+            <button type="button" data-filter="api" aria-pressed="false">广告接口 <span>2</span></button>
+            <button type="button" data-filter="feed" aria-pressed="false">内容过滤 <span>1</span></button>
+            <button type="button" data-filter="rules" aria-pressed="false">规则合集 <span>1</span></button>
+            <button type="button" data-filter="imported" aria-pressed="false">扩展目录 <span id="importedCount">0</span></button>
+          </div>
+          <span class="catalog-count" id="resultsCount" aria-live="polite">共 6 个模块</span>
+        </div>
+
+        <div class="catalog-grid" id="catalogGrid">
+          <article class="catalog-card" data-category="splash" data-search="人民日报 开屏广告 新闻 rmrb">
+            <div class="catalog-card-top"><img class="app-icon" src="assets/renmin-ribao.jpg" alt="" width="53" height="53"><span class="catalog-type">开屏过滤</span></div>
+            <h3>人民日报</h3>
+            <p class="catalog-subtitle">打开新闻，跳过开屏打扰。</p>
+            <p class="catalog-description">清空开屏接口中的广告字段，并拦截模块中列出的开屏素材地址。</p>
+            <div class="catalog-tags"><span>iOS</span><span>Surge</span><span>MITM</span></div>
+            <div class="catalog-actions"><a class="button button-dark import-link" data-module-url="https://raw.githubusercontent.com/ogbk666-prog/surge-modules/main/rmrb.sgmodule" href="surge:///install-module?url=https%3A%2F%2Fraw.githubusercontent.com%2Fogbk666-prog%2Fsurge-modules%2Fmain%2Frmrb.sgmodule">导入 Surge <span aria-hidden="true">↗</span></a><button class="text-button copy-link" type="button" data-module-url="https://raw.githubusercontent.com/ogbk666-prog/surge-modules/main/rmrb.sgmodule">复制地址 ⧉</button></div>
+          </article>
+
+          <article class="catalog-card" data-category="multi" data-search="心悦俱乐部 完整版 开屏 首页 游戏中心 玩家俱乐部 我的 广告 xinyue">
+            <div class="catalog-card-top"><img class="app-icon" src="assets/xinyue-club.jpg" alt="" width="53" height="53"><span class="catalog-type">多页面过滤</span></div>
+            <h3>心悦俱乐部 <small>完整版</small></h3>
+            <p class="catalog-subtitle">过滤多个页面的广告内容。</p>
+            <p class="catalog-description">覆盖开屏、首页、游戏中心、玩家俱乐部与“我的”页；对应 iOS 版 6.5.4.34 抓包样本。</p>
+            <div class="catalog-tags"><span>iOS</span><span>Surge</span><span>MITM</span></div>
+            <div class="catalog-actions"><a class="button button-dark import-link" data-module-url="https://raw.githubusercontent.com/ogbk666-prog/xinyue-surge-adblock/main/xinyue-adblock.sgmodule" href="surge:///install-module?url=https%3A%2F%2Fraw.githubusercontent.com%2Fogbk666-prog%2Fxinyue-surge-adblock%2Fmain%2Fxinyue-adblock.sgmodule">导入 Surge <span aria-hidden="true">↗</span></a><button class="text-button copy-link" type="button" data-module-url="https://raw.githubusercontent.com/ogbk666-prog/xinyue-surge-adblock/main/xinyue-adblock.sgmodule">复制地址 ⧉</button></div>
+          </article>
+
+          <article class="catalog-card" data-category="api" data-search="虎扑 8.0.50 广告 goblin getOther v2 batch hupu">
+            <div class="catalog-card-top"><img class="app-icon" src="assets/hupu.jpg" alt="" width="53" height="53"><span class="catalog-type">广告接口</span></div>
+            <h3>虎扑 <small>8.0.50</small></h3>
+            <p class="catalog-subtitle">清空 goblin 接口广告列表。</p>
+            <p class="catalog-description">适配 getOther/v2 与 batch 响应；启用后需在 Surge 中开启 HTTPS 解密。</p>
+            <div class="catalog-tags"><span>iOS</span><span>Surge</span><span>MITM</span></div>
+            <div class="catalog-actions"><a class="button button-dark import-link" data-module-url="https://raw.githubusercontent.com/ogbk666-prog/surge-modules/main/hupu-adblock.sgmodule" href="surge:///install-module?url=https%3A%2F%2Fraw.githubusercontent.com%2Fogbk666-prog%2Fsurge-modules%2Fmain%2Fhupu-adblock.sgmodule">导入 Surge <span aria-hidden="true">↗</span></a><button class="text-button copy-link" type="button" data-module-url="https://raw.githubusercontent.com/ogbk666-prog/surge-modules/main/hupu-adblock.sgmodule">复制地址 ⧉</button></div>
+          </article>
+
+          <article class="catalog-card" data-category="api" data-search="公考雷达 广告 接口 site_config gongkaoleida">
+            <div class="catalog-card-top"><img class="app-icon" src="assets/gongkaoleida.jpg" alt="" width="53" height="53"><span class="catalog-type">广告接口</span></div>
+            <h3>公考雷达 <small>配置提取版</small></h3>
+            <p class="catalog-subtitle">拦截广告接口和配置请求。</p>
+            <p class="catalog-description">整理原配置中的 ad/info 与 site_config 规则；原配置引用的本地脚本尚未提供。</p>
+            <div class="catalog-tags"><span>iOS</span><span>Surge</span><span>MITM</span></div>
+            <div class="catalog-actions"><a class="button button-dark import-link" data-module-url="https://raw.githubusercontent.com/ogbk666-prog/surge-modules/main/gongkaoleida-adblock.sgmodule" href="surge:///install-module?url=https%3A%2F%2Fraw.githubusercontent.com%2Fogbk666-prog%2Fsurge-modules%2Fmain%2Fgongkaoleida-adblock.sgmodule">导入 Surge <span aria-hidden="true">↗</span></a><button class="text-button copy-link" type="button" data-module-url="https://raw.githubusercontent.com/ogbk666-prog/surge-modules/main/gongkaoleida-adblock.sgmodule">复制地址 ⧉</button></div>
+          </article>
+
+          <article class="catalog-card" data-category="feed" data-search="小红书 首页 搜索 信息流 内容过滤 xiaohongshu">
+            <div class="catalog-card-top"><img class="app-icon" src="assets/xiaohongshu.jpg" alt="" width="53" height="53"><span class="catalog-type">内容过滤</span></div>
+            <h3>小红书 <small>配置提取版</small></h3>
+            <p class="catalog-subtitle">过滤搜索与首页信息流。</p>
+            <p class="catalog-description">只保留 normal 类型条目；也可能隐藏非广告内容，启用前请检查规则。</p>
+            <div class="catalog-tags"><span>iOS</span><span>Surge</span><span>MITM</span></div>
+            <div class="catalog-actions"><a class="button button-dark import-link" data-module-url="https://raw.githubusercontent.com/ogbk666-prog/surge-modules/main/xiaohongshu-feed-filter.sgmodule" href="surge:///install-module?url=https%3A%2F%2Fraw.githubusercontent.com%2Fogbk666-prog%2Fsurge-modules%2Fmain%2Fxiaohongshu-feed-filter.sgmodule">导入 Surge <span aria-hidden="true">↗</span></a><button class="text-button copy-link" type="button" data-module-url="https://raw.githubusercontent.com/ogbk666-prog/surge-modules/main/xiaohongshu-feed-filter.sgmodule">复制地址 ⧉</button></div>
+          </article>
+
+          <article class="catalog-card" data-category="rules" data-search="配置 通用 去广告 广告域名 联通 百视通 Adblock4limbo 规则合集">
+            <div class="catalog-card-top"><img class="app-icon" src="favicon.svg" alt="" width="53" height="53"><span class="catalog-type">规则合集</span></div>
+            <h3>配置去广告规则 <small>合集</small></h3>
+            <p class="catalog-subtitle">整合明确的广告域名和接口。</p>
+            <p class="catalog-description">包含 Adblock4limbo 作者的公开规则集；未收录原配置中的证书、会话数据和用途不明的拦截。</p>
+            <div class="catalog-tags"><span>Surge</span><span>规则集</span><span>MITM</span></div>
+            <div class="catalog-actions"><a class="button button-dark import-link" data-module-url="https://raw.githubusercontent.com/ogbk666-prog/surge-modules/main/surge-config-adblock.sgmodule" href="surge:///install-module?url=https%3A%2F%2Fraw.githubusercontent.com%2Fogbk666-prog%2Fsurge-modules%2Fmain%2Fsurge-config-adblock.sgmodule">导入 Surge <span aria-hidden="true">↗</span></a><button class="text-button copy-link" type="button" data-module-url="https://raw.githubusercontent.com/ogbk666-prog/surge-modules/main/surge-config-adblock.sgmodule">复制地址 ⧉</button></div>
+          </article>
+
+        </div>
+        <div class="catalog-more-wrap"><button class="button button-outline" id="loadMore" type="button" hidden>显示更多模块 <span aria-hidden="true">↓</span></button></div>
+        <p class="catalog-note">规则版仅保留可解析的请求拦截项，脚本及其它功能未移植。</p>
+        <p class="catalog-empty" id="emptyState" hidden>没有找到匹配的模块，试试其他关键词或筛选条件。</p>
+      </div>
+    </section>
+
+    <section class="statement" aria-label="使用理念"><div class="shell"><p>KEEP WHAT MATTERS</p><h2>内容，值得好好看。<br><span>广告，不必抢镜。</span></h2></div></section>
+
+    <section class="guide-section shell" id="guide" aria-labelledby="guide-title">
+      <div class="section-heading"><div><p class="section-number">02 / GET STARTED</p><h2 id="guide-title">三步，开始使用。</h2></div><p>请在已安装 Surge 的 iPhone 上打开本页。链接只负责唤起导入，是否启用由你在 Surge 中确认。</p></div>
+      <div class="steps">
+        <article><span class="step-num">01</span><h3>选择模块</h3><p>先看用途和版本说明，按需要选择对应的去广告模块。</p></article>
+        <article><span class="step-num">02</span><h3>点击导入</h3><p>点击「导入 Surge」，在 Surge 弹出的页面中检查并确认模块。</p></article>
+        <article><span class="step-num">03</span><h3>启用所需功能</h3><p>在 Surge 中启用模块。脚本改写需要按 Surge 提示配置并启用 MITM。</p></article>
+      </div>
+      <div class="guide-note"><span class="guide-note-icon" aria-hidden="true">↗</span><div><strong>按钮没有打开 Surge？</strong><p>请用安装了 Surge 的 iPhone 浏览器访问本页；也可以复制模块地址，到 Surge 的模块页面手动添加。</p></div></div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="faq-title"><div class="shell"><div class="section-heading"><div><p class="section-number">03 / FAQ</p><h2 id="faq-title">安装前，了解这些。</h2></div></div><div class="faq-list">
+      <details><summary>为什么导入后仍然看到广告？<span aria-hidden="true">＋</span></summary><p>请检查模块是否启用、Surge 的脚本及 MITM 是否正常工作，以及当前 App 版本是否与模块适配。模块效果会随应用更新而变化。</p></details>
+      <details><summary>能在电脑上直接导入吗？<span aria-hidden="true">＋</span></summary><p>导入按钮使用 Surge 官方 URL Scheme。请在已安装 Surge 的设备上点击；电脑上可以先复制模块地址。</p></details>
+    </div></div></section>
+  </main>
+
+  <footer class="footer"><div class="shell footer-content"><p>Copyright © 2026 清爽一点. All rights reserved.</p><nav class="footer-links" aria-label="社群链接"><a href="https://t.me/+4H9xuC1dsUQ4ODll" target="_blank" rel="noopener noreferrer">Telegram</a></nav></div></footer>
+  <div class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
