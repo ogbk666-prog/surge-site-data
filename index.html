@@ -73,13 +73,18 @@
         <div class="catalog-tools">
           <label class="catalog-search" for="moduleSearch"><span aria-hidden="true">⌕</span><input id="moduleSearch" type="search" placeholder="搜索模块或应用" autocomplete="off" aria-label="搜索模块或应用"></label>
           <div class="catalog-filters" role="group" aria-label="按模块用途筛选">
-            <button type="button" class="active" data-filter="all" aria-pressed="true">全部 <span>6</span></button>
-            <button type="button" data-filter="splash" aria-pressed="false">开屏过滤 <span>1</span></button>
-            <button type="button" data-filter="multi" aria-pressed="false">多页面过滤 <span>1</span></button>
-            <button type="button" data-filter="api" aria-pressed="false">广告接口 <span>2</span></button>
-            <button type="button" data-filter="feed" aria-pressed="false">内容过滤 <span>1</span></button>
-            <button type="button" data-filter="rules" aria-pressed="false">规则合集 <span>1</span></button>
-            <button type="button" data-filter="imported" aria-pressed="false">扩展目录 <span id="importedCount">0</span></button>
+            <button type="button" class="active" data-kind-filter="all" aria-pressed="true">全部 <span data-count="all">0</span></button>
+            <button type="button" data-kind-filter="featured" aria-pressed="false">精选 <span data-count="featured">6</span></button>
+            <button type="button" data-kind-filter="surge" aria-pressed="false">Surge 模块 <span data-count="surge">0</span></button>
+            <button type="button" data-kind-filter="loon" aria-pressed="false">Loon 插件 <span data-count="loon">0</span></button>
+            <span class="filter-divider" aria-hidden="true" style="opacity:.3;margin:0 4px;align-self:center">·</span>
+            <button type="button" class="active" data-category-filter="all" aria-pressed="true">全部用途 <span data-count="cat-all">0</span></button>
+            <button type="button" data-category-filter="去广告" aria-pressed="false">去广告 <span data-count="cat-去广告">0</span></button>
+            <button type="button" data-category-filter="解锁" aria-pressed="false">解锁 <span data-count="cat-解锁">0</span></button>
+            <button type="button" data-category-filter="功能增强" aria-pressed="false">功能增强 <span data-count="cat-功能增强">0</span></button>
+            <button type="button" data-category-filter="工具脚本" aria-pressed="false">工具脚本 <span data-count="cat-工具脚本">0</span></button>
+            <button type="button" data-category-filter="分流规则" aria-pressed="false">分流规则 <span data-count="cat-分流规则">0</span></button>
+            <button type="button" data-category-filter="其他" aria-pressed="false">其他 <span data-count="cat-其他">0</span></button>
           </div>
           <span class="catalog-count" id="resultsCount" aria-live="polite">共 6 个模块</span>
         </div>

@@ -24,6 +24,7 @@ async function copyText(value) {
   if (!ok) throw new Error('copy failed');
 }
 
+// 按平台选导入协议：Surge 用 surge:///install-module，Loon 用 loon://import
 function importHref(kind, url) {
   return kind === 'loon'
     ? `loon://import?plugin=${encodeURIComponent(url)}`
@@ -35,32 +36,42 @@ document.querySelectorAll('.import-link').forEach(link => {
   link.href = importHref(link.dataset.kind || 'surge', url);
 });
 
-document.querySelector('#catalogGrid').addEventListener('click', async event => {
-  const button = event.target.closest('.copy-link');
-  if (!button) return;
-  try {
-    await copyText(button.dataset.moduleUrl);
-    announce('模块地址已复制');
-  } catch {
-    announce('复制失败，请打开源码页面手动复制地址');
-  }
+// 首页 6 张精选卡片不属于扩展目录，单独归到 featured
+document.querySelectorAll('.catalog-card:not(.imported-card)').forEach(card => {
+  card.dataset.kind = card.dataset.kind || 'featured';
+  card.dataset.category = card.dataset.category || 'featured';
 });
 
 const searchInput = document.querySelector('#moduleSearch');
-const filterButtons = [...document.querySelectorAll('[data-filter]')];
 const catalogGrid = document.querySelector('#catalogGrid');
 const resultsCount = document.querySelector('#resultsCount');
 const emptyState = document.querySelector('#emptyState');
 const loadMore = document.querySelector('#loadMore');
-let activeFilter = 'all';
+const kindButtons = [...document.querySelectorAll('[data-kind-filter]')];
+const categoryButtons = [...document.querySelectorAll('[data-category-filter]')];
+
+let activeKind = 'all';
+let activeCategory = 'all';
 let displayLimit = 24;
+
+const CATEGORY_LABEL = {
+  '去广告': '去广告',
+  '解锁': '解锁',
+  '功能增强': '功能增强',
+  '工具脚本': '工具脚本',
+  '分流规则': '分流规则',
+  '其他': '其他',
+};
 
 function importedCard(module) {
   const kind = module.kind === 'loon' ? 'loon' : 'surge';
+  const category = CATEGORY_LABEL[module.category] || '其他';
   const card = document.createElement('article');
   card.className = 'catalog-card imported-card';
-  card.dataset.category = 'imported';
-  card.dataset.search = `${module.name} ${module.ruleCount} ${kind === 'loon' ? 'Loon' : 'Surge'} 去广告 拦截`;
+  card.dataset.kind = kind;
+  card.dataset.category = category;
+  card.dataset.search = `${module.name} ${module.ruleCount} ${kind === 'loon' ? 'Loon' : 'Surge'} ${category} 去广告 拦截 广告 ${module.desc || ''}`;
+
   const top = document.createElement('div');
   top.className = 'catalog-card-top';
   const icon = document.createElement('img');
@@ -74,20 +85,24 @@ function importedCard(module) {
   type.className = 'catalog-type';
   type.textContent = kind === 'loon' ? 'Loon 插件' : 'Surge 模块';
   top.append(icon, type);
+
   const title = document.createElement('h3');
   title.textContent = module.name;
+
   const description = document.createElement('p');
   description.className = 'catalog-description';
   description.textContent = module.ruleCount > 0
     ? `保留 ${module.ruleCount} 条广告请求拦截规则。`
     : '脚本 / 配置类模块，导入后按需启用。';
+
   const tags = document.createElement('div');
   tags.className = 'catalog-tags';
-  for (const label of [kind === 'loon' ? 'Loon' : 'Surge', '广告拦截']) {
+  for (const label of [category, kind === 'loon' ? 'Loon' : 'Surge']) {
     const tag = document.createElement('span');
     tag.textContent = label;
     tags.append(tag);
   }
+
   const actions = document.createElement('div');
   actions.className = 'catalog-actions';
   const install = document.createElement('a');
@@ -105,35 +120,79 @@ function importedCard(module) {
   return card;
 }
 
+catalogGrid.addEventListener('click', async event => {
+  const button = event.target.closest('.copy-link');
+  if (!button) return;
+  try {
+    await copyText(button.dataset.moduleUrl);
+    announce('模块地址已复制');
+  } catch {
+    announce('复制失败，请打开源码页面手动复制地址');
+  }
+});
+
 function updateCatalog() {
   const query = searchInput.value.trim().toLocaleLowerCase();
   let visible = 0;
   document.querySelectorAll('.catalog-card').forEach(card => {
-    const matchesCategory = activeFilter === 'all' || card.dataset.category === activeFilter;
-    const matchesSearch = card.dataset.search.toLocaleLowerCase().includes(query);
-    const matches = matchesCategory && matchesSearch;
+    const kindOk = activeKind === 'all' || card.dataset.kind === activeKind;
+    const catOk = activeCategory === 'all' || card.dataset.category === activeCategory;
+    const searchOk = !query || (card.dataset.search || '').toLocaleLowerCase().includes(query);
+    const matches = kindOk && catOk && searchOk;
     card.hidden = !matches || visible >= displayLimit;
     if (matches) visible += 1;
   });
   resultsCount.textContent = `共 ${visible} 个模块`;
-  emptyState.hidden = visible !== 0;
-  loadMore.hidden = visible <= displayLimit;
+  if (emptyState) emptyState.hidden = visible !== 0;
+  if (loadMore) loadMore.hidden = visible <= displayLimit;
 }
+
+function bindFilterGroup(buttons, apply) {
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      apply(button);
+      displayLimit = 24;
+      buttons.forEach(item => {
+        const selected = item === button;
+        item.classList.toggle('active', selected);
+        item.setAttribute('aria-pressed', String(selected));
+      });
+      updateCatalog();
+    });
+  });
+}
+
+bindFilterGroup(kindButtons, (btn) => { activeKind = btn.dataset.kindFilter; });
+bindFilterGroup(categoryButtons, (btn) => { activeCategory = btn.dataset.categoryFilter; });
 
 searchInput.addEventListener('input', () => { displayLimit = 24; updateCatalog(); });
 loadMore.addEventListener('click', () => { displayLimit += 24; updateCatalog(); });
-filterButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    activeFilter = button.dataset.filter;
-    displayLimit = 24;
-    filterButtons.forEach(item => {
-      const selected = item === button;
-      item.classList.toggle('active', selected);
-      item.setAttribute('aria-pressed', String(selected));
-    });
-    updateCatalog();
-  });
-});
+
+// 把各分类数量回填到筛选按钮上
+function fillCounts(modules) {
+  const kindCount = { surge: 0, loon: 0 };
+  const catCount = {};
+  for (const m of modules) {
+    const k = m.kind === 'loon' ? 'loon' : 'surge';
+    kindCount[k] += 1;
+    const c = CATEGORY_LABEL[m.category] || '其他';
+    catCount[c] = (catCount[c] || 0) + 1;
+  }
+  const featured = document.querySelectorAll('.catalog-card:not(.imported-card)').length;
+
+  const setCount = (key, value) => {
+    const el = document.querySelector(`[data-count="${key}"]`);
+    if (el) el.textContent = String(value);
+  };
+  setCount('all', modules.length + featured);
+  setCount('featured', featured);
+  setCount('surge', kindCount.surge);
+  setCount('loon', kindCount.loon);
+  setCount('cat-all', modules.length);
+  for (const [name, n] of Object.entries(catCount)) {
+    setCount('cat-' + name, n);
+  }
+}
 
 fetch('catalog.json?v=DEV')
   .then(response => { if (!response.ok) throw new Error('catalog unavailable'); return response.json(); })
@@ -142,8 +201,9 @@ fetch('catalog.json?v=DEV')
       module.url?.startsWith('https://surge.loder.my/modules/imported/')) : [];
     catalogGrid.append(...modules.map(importedCard));
     document.querySelector('#importedCount').textContent = modules.length;
-// 只统计扩展目录条目，不再硬编码 +6（那 6 个是 index.html 里的精选卡片）
+    // 只统计扩展目录条目，不再硬编码 +6（那 6 个是 index.html 里的精选卡片）
     document.querySelector('#totalModules').textContent = String(modules.length);
+    fillCounts(modules);
     updateCatalog();
   })
   .catch(() => announce('扩展目录暂时无法加载'));
